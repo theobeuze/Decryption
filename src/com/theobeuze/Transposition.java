@@ -1,5 +1,8 @@
 package com.theobeuze;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Scanner;
 
 /**
@@ -9,17 +12,7 @@ public class Transposition {
 
     private String newTexte = "";
 
-    private String texte = "ltdscseohoeeeusetnapeiercvceteeoednonlnprt" +
-            "petiottaeeoksttfuesemepzdcfepiohildidecphb" +
-            "clllaenrgoaaieuetnistvnffnsoerunorseedeuen" +
-            "queuqrsiserdeuovtereentancentribituserdcct" +
-            "ileeleafunatteeeqeiieuiudesuaorarafsnvaqis" +
-            "irsensnudusiorleraruiqioaesetsmtenssllldca" +
-            "eiruemuvstlmnaemoseeoeeueaynlesnoqooreatct" +
-            "eipzdlscsnpstncseiuuieycmdnrraqevuoniilupu" +
-            "neunzrteaadtutqceniosduerueuunduouneedisee" +
-            "erstnentsooseiughhaeioeaerreortbgesirhsvvc" +
-            "iaeiiitmlmulvitapotealoeeir";
+    private String texte = "";
 
     private String key;
 
@@ -28,11 +21,29 @@ public class Transposition {
     private int tableauLong;
 
     void calculTranspo() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.println("Veuillez indiquer le path du fichier contenant le message (sur une seule ligne) :");
+        String chemin = sc.nextLine();
+
+        try {
+            BufferedReader fichier_source = new BufferedReader(new FileReader(chemin));
+            String chaine;
+
+            while((chaine = fichier_source.readLine())!= null)
+            {
+                texte = chaine;
+            }
+            fichier_source.close();
+        } catch (IOException e) {
+            System.out.println("Le fichier est introuvable !");
+        }
 
         initialiseTableau();
         remplissage();
         //afficheTableau();
         afficheTraduction();
+        System.out.println(newTexte);
     }
 
     private void initialiseTableau() {
@@ -103,6 +114,5 @@ public class Transposition {
             }
             System.out.println();
         }
-        System.out.println(newTexte);
     }
 }
